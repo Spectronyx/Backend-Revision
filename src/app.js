@@ -25,4 +25,15 @@ import userRouter from "./routes/user.route.js";
 
 app.use("/api/v1/users",userRouter);
 
+app.use((err, req, res, next) => {
+    // console.error("🔥 ERROR STACK:\n", err.stack);
+
+    res.status(err.statusCode || 500).json({
+        success: false,
+        message: err.message,
+        errors: err.errors || [],
+    });
+});
+
+
 export default app;
